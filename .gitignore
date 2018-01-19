@@ -1,0 +1,10 @@
+*~
+.DS_Store
+.swp
+.orig
+.log
+.trashcan
+Session.vim
+.vimrc
+.private
+
