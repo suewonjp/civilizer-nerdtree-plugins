@@ -5,11 +5,11 @@ endif
 let g:loaded_nerd_tree_bookmark_utils = 1
 let g:slash = !exists("+shellslash") || &shellslash ? '/' : '\'
 
-function! s:GetPrefix(id)
+function! s:BookmarkPrefix(id)
   return '<<' . a:id . '>>_'
 endfunction
 
-function! s:GetAvailableBmId()
+function! s:AvailableBookmarkId()
   let l:names = g:NERDTreeBookmark.BookmarkNames()
   call filter(l:names, 'v:val =~# "^<<[0-9]>>_"')
   if empty(l:names)
@@ -36,7 +36,7 @@ function! NerdTreexBookmark()
   let l:node = g:NERDTreeFileNode.GetSelected()
   let l:path = g:slash . join(l:node.path.pathSegments, g:slash)
   let l:path = substitute(l:path, '\s', '@', 'g')
-  let l:name = s:GetPrefix(s:GetAvailableBmId()) . l:path
+  let l:name = s:BookmarkPrefix(s:AvailableBookmarkId()) . l:path
   exe 'Bookmark ' . l:name
 endfunction
 
@@ -46,7 +46,7 @@ function! NerdTreexAccessBookmark(id)
   endif
 
   let l:tmp = @/
-  silent! exe '/[^{]' . s:GetPrefix(a:id)
+  silent! exe '/[^{]' . s:BookmarkPrefix(a:id)
   nohls 
   let @/ = l:tmp
 endfunction
@@ -158,6 +158,7 @@ function! NerdTreexInitBookmarkUtils()
       nnoremap <buffer><silent> g- :<C-u>call NerdTreexAccessBookmark('-')<CR>
       nnoremap <buffer><silent> gk :<C-u>call NerdTreexRootHistoryBackward()<CR>
       nnoremap <buffer><silent> gj :<C-u>call NerdTreexRootHistoryForward()<CR>
+      nnoremap <buffer><silent> Sh :<C-u>call NerdTreexShowRootHistory()<CR>
 
       if ! exists('w:nerdtreex_rh_ptr')
         let w:nerdtreex_rh_ptr = -1
