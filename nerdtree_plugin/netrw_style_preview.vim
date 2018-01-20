@@ -20,7 +20,11 @@ function! NerdTreexPreview(key)
       exe 'edit ' . l:path
       exe l:wnr . 'wincmd w'
     else
-      exe 'norm gs'
+      if exists('g:netrw_preview') && g:netrw_preview == 1
+        exe 'norm gs'
+      else
+        exe 'norm gi'
+      endif
       let t:nerdtreex_has_preview_win = winnr() - 1
     endif
   elseif a:key == 'Pr'
