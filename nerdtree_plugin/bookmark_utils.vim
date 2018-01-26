@@ -166,8 +166,12 @@ function! NerdTreexInitBookmarkUtils()
 
       if ! exists('w:nerdtreex_rh')
         let w:nerdtreex_rh = []
-        let l:root = b:NERDTree.root.path
-        call s:AddItemToRootHistory(l:root.str())
+        if exists('b:NERDTree')
+          let l:root = b:NERDTree.root.path.str()
+        else
+          let l:root = expand('%:p:h')
+        endif
+        call s:AddItemToRootHistory(l:root)
       endif
 
       call NerdTreexOverrideKeyMap(g:NERDTreeMapOpenSplit, 'Bookmark', 'NerdTreexOpenHSplitBookmark')
