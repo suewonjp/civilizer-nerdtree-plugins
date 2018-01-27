@@ -8,7 +8,7 @@ let g:slash = !exists("+shellslash") || &shellslash ? '/' : '\'
 function! NerdTreexGetAbsPath(...)
   let l:node = g:NERDTreeFileNode.GetSelected()
   let l:quote = a:0 ? a:1 : ''
-  return l:quote . join(l:node.path.pathSegments, g:slash) . l:quote
+  return l:quote . g:slash . join(l:node.path.pathSegments, g:slash) . l:quote
 endfunction 
 
 au FileType nerdtree
