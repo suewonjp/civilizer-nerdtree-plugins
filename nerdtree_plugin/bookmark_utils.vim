@@ -95,6 +95,18 @@ function! NerdTreexChangeRoot(node)
   call s:AddItemToRootHistory(l:root.str())
 endfunction
 
+function! NerdTreexChangeRootToCwd(node)
+  try
+    let cwd = g:NERDTreePath.New(getcwd())
+  catch /^NERDTree.InvalidArgumentsError/
+    call nerdtree#echo("current directory does not exist.")
+    return
+  endtry
+  call b:NERDTree.changeRoot(g:NERDTreeDirNode.New(cwd, b:NERDTree))
+  let l:root = b:NERDTree.root.path
+  call s:AddItemToRootHistory(l:root.str())
+endfunction
+
 function! s:AddItemToRootHistory(item)
   if w:nerdtreex_rh_ptr < -1
     " During history navigation
@@ -160,6 +172,14 @@ function! NerdTreexInitBookmarkUtils()
       nnoremap <buffer><silent> gj :<C-u>call NerdTreexRootHistoryForward()<CR>
       nnoremap <buffer><silent> Sh :<C-u>call NerdTreexShowRootHistory()<CR>
 
+      call NERDTreeAddKeyMap({ 'key':'g<CR>', 'quickhelpText':'Add bookmark', 'callback':v:none })
+      call NERDTreeAddKeyMap({ 'key':'g0', 'quickhelpText':'Move cursor to bookmark 0', 'callback':v:none })
+      call NERDTreeAddKeyMap({ 'key':'g1', 'quickhelpText':'Move cursor to bookmark 1', 'callback':v:none })
+      call NERDTreeAddKeyMap({ 'key':'g9', 'quickhelpText':'Move cursor to bookmark 9', 'callback':v:none })
+      call NERDTreeAddKeyMap({ 'key':'gk', 'quickhelpText':'Root history backward', 'callback':v:none })
+      call NERDTreeAddKeyMap({ 'key':'gj', 'quickhelpText':'Root history forward', 'callback':v:none })
+      call NERDTreeAddKeyMap({ 'key':'Sh', 'quickhelpText':'Show root history', 'callback':v:none })
+
       if ! exists('w:nerdtreex_rh_ptr')
         let w:nerdtreex_rh_ptr = -1
       endif
@@ -183,6 +203,7 @@ function! NerdTreexInitBookmarkUtils()
       call NerdTreexOverrideKeyMap(g:NERDTreeMapUpdirKeepOpen, 'all', 'NerdTreexUpDirCurrentRootOpen')
       call NerdTreexOverrideKeyMap(g:NERDTreeMapUpdir, 'all', 'NerdTreexUpDirCurrentRootClosed')
       call NerdTreexOverrideKeyMap(g:NERDTreeMapChangeRoot, 'Node', 'NerdTreexChangeRoot')
+      call NerdTreexOverrideKeyMap(g:NERDTreeMapCWD, 'Node', 'NerdTreexChangeRootToCwd')
 endfunction
 
 au FileType nerdtree call NerdTreexInitBookmarkUtils()

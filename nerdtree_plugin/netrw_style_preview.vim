@@ -43,12 +43,16 @@ function! NerdTreexPreview(key)
   endif
 endfunction
 
-function! NerdTreexInitNetrwKeymaps()
+function! NerdTreexInitNetrwStylePreview()
     nmap <buffer><silent> pr :<C-u>call NerdTreexPreview('pr')<CR>
     nmap <buffer><silent> Pr :<C-u>call NerdTreexPreview('Pr')<CR>
     nmap <silent> <C-w>z :<C-u>call NerdTreexPreview("\<C-w\>z")<CR>
+
+    call NERDTreeAddKeyMap({ 'key':'pr', 'quickhelpText':'Netrw style preview', 'callback':v:none })
+    call NERDTreeAddKeyMap({ 'key':'Pr', 'quickhelpText':'Netrw style preview (focus taken)', 'callback':v:none })
+    call NERDTreeAddKeyMap({ 'key':'<C-W>z', 'quickhelpText':'Close Netrw style preview window', 'callback':v:none })
 endfunction
 
-au FileType nerdtree call NerdTreexInitNetrwKeymaps()
+au FileType nerdtree call NerdTreexInitNetrwStylePreview()
 
 " vim: sw=2 foldmethod=marker :
