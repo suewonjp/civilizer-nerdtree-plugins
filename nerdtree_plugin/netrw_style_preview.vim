@@ -46,6 +46,7 @@ endfunction
 function! NerdTreexInitNetrwStylePreview()
     nmap <buffer><silent> pr :<C-u>call NerdTreexPreview('pr')<CR>
     nmap <buffer><silent> Pr :<C-u>call NerdTreexPreview('Pr')<CR>
+    nmap <buffer><silent> <C-w>z :<C-u>call NerdTreexPreview("\<C-w\>z")<CR>
     nmap <silent> <C-w>z :<C-u>call NerdTreexPreview("\<C-w\>z")<CR>
 
     call NERDTreeAddKeyMap({ 'key':'pr', 'quickhelpText':'Netrw style preview', 'callback':v:none })
