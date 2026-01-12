@@ -209,7 +209,8 @@ function! NerdTreexInitBookmarkUtils()
       call NerdTreexOverrideKeyMap(g:NERDTreeMapUpdirKeepOpen, 'all', 'NerdTreexUpDirCurrentRootOpen')
       call NerdTreexOverrideKeyMap(g:NERDTreeMapUpdir, 'all', 'NerdTreexUpDirCurrentRootClosed')
       call NerdTreexOverrideKeyMap(g:NERDTreeMapChangeRoot, 'Node', 'NerdTreexChangeRoot')
-      call NerdTreexOverrideKeyMap(g:NERDTreeMapCWD, 'Node', 'NerdTreexChangeRootToCwd')
+      call NerdTreexOverrideKeyMap(g:NERDTreeMapOpenExpl, 'DirNode', 'NerdTreexChangeRoot')
+      call NerdTreexOverrideKeyMap(g:NERDTreeMapCWD, 'all', 'NerdTreexChangeRootToCwd')
 endfunction
 
 au FileType nerdtree call NerdTreexInitBookmarkUtils()
