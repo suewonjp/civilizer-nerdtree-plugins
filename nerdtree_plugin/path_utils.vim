@@ -25,12 +25,12 @@ function! NerdTreexInitPathUtils()
     nnoremap <buffer><silent> "+ :<C-u>call setreg('*', NerdTreexGetAbsPath('"'))<CR> \| :echo getreg('*')<CR>
     nnoremap <buffer><silent> '+ :<C-u>call setreg('*', NerdTreexGetAbsPath("'"))<CR> \| :echo getreg('*')<CR>
 
-    call NERDTreeAddKeyMap({ 'key':'yy', 'quickhelpText':'Yank path', 'callback':v:none })
-    call NERDTreeAddKeyMap({ 'key':'y+', 'quickhelpText':'Yank path to system clipboard', 'callback':v:none })
-    call NERDTreeAddKeyMap({ 'key':'""', 'quickhelpText':'Yank double-quoted path', 'callback':v:none })
-    call NERDTreeAddKeyMap({ 'key':"''", 'quickhelpText':'Yank single-quoted path', 'callback':v:none })
-    call NERDTreeAddKeyMap({ 'key':'"+', 'quickhelpText':'Yank double-quoted path to system clipboard', 'callback':v:none })
-    call NERDTreeAddKeyMap({ 'key':"'+", 'quickhelpText':'Yank single-quoted path to system clipboard', 'callback':v:none })
+    call NERDTreeAddKeyMap({ 'key':'yy', 'quickhelpText':'Yank path', 'callback':v:null })
+    call NERDTreeAddKeyMap({ 'key':'y+', 'quickhelpText':'Yank path to system clipboard', 'callback':v:null })
+    call NERDTreeAddKeyMap({ 'key':'""', 'quickhelpText':'Yank double-quoted path', 'callback':v:null })
+    call NERDTreeAddKeyMap({ 'key':"''", 'quickhelpText':'Yank single-quoted path', 'callback':v:null })
+    call NERDTreeAddKeyMap({ 'key':'"+', 'quickhelpText':'Yank double-quoted path to system clipboard', 'callback':v:null })
+    call NERDTreeAddKeyMap({ 'key':"'+", 'quickhelpText':'Yank single-quoted path to system clipboard', 'callback':v:null })
 endfunction
 
 au FileType nerdtree call NerdTreexInitPathUtils()

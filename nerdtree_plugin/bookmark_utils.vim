@@ -178,13 +178,13 @@ function! NerdTreexInitBookmarkUtils()
       nnoremap <buffer><silent> gj :<C-u>call NerdTreexRootHistoryForward()<CR>
       nnoremap <buffer><silent> Sh :<C-u>call NerdTreexShowRootHistory()<CR>
 
-      call NERDTreeAddKeyMap({ 'key':'g<CR>', 'quickhelpText':'Add bookmark', 'callback':v:none })
-      call NERDTreeAddKeyMap({ 'key':'g0', 'quickhelpText':'Move cursor to bookmark 0', 'callback':v:none })
-      call NERDTreeAddKeyMap({ 'key':'g1', 'quickhelpText':'Move cursor to bookmark 1', 'callback':v:none })
-      call NERDTreeAddKeyMap({ 'key':'g9', 'quickhelpText':'Move cursor to bookmark 9', 'callback':v:none })
-      call NERDTreeAddKeyMap({ 'key':'gk', 'quickhelpText':'Root history backward', 'callback':v:none })
-      call NERDTreeAddKeyMap({ 'key':'gj', 'quickhelpText':'Root history forward', 'callback':v:none })
-      call NERDTreeAddKeyMap({ 'key':'Sh', 'quickhelpText':'Show root history', 'callback':v:none })
+      call NERDTreeAddKeyMap({ 'key':'g<CR>', 'quickhelpText':'Add bookmark', 'callback':v:null })
+      call NERDTreeAddKeyMap({ 'key':'g0', 'quickhelpText':'Move cursor to bookmark 0', 'callback':v:null })
+      call NERDTreeAddKeyMap({ 'key':'g1', 'quickhelpText':'Move cursor to bookmark 1', 'callback':v:null })
+      call NERDTreeAddKeyMap({ 'key':'g9', 'quickhelpText':'Move cursor to bookmark 9', 'callback':v:null })
+      call NERDTreeAddKeyMap({ 'key':'gk', 'quickhelpText':'Root history backward', 'callback':v:null })
+      call NERDTreeAddKeyMap({ 'key':'gj', 'quickhelpText':'Root history forward', 'callback':v:null })
+      call NERDTreeAddKeyMap({ 'key':'Sh', 'quickhelpText':'Show root history', 'callback':v:null })
 
       if ! exists('w:nerdtreex_rh_ptr')
         let w:nerdtreex_rh_ptr = -1
