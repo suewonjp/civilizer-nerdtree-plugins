@@ -4,7 +4,9 @@
 .orig
 .log
 .trashcan
-Session.vim
-.vimrc
-.private
-
+/Session.vim
+/.exrc*
+/.private
+/.vscode
+/memo/
+/tmp/
