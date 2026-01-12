@@ -1,7 +1,6 @@
-Copyright (c) 2018- Suewon Bahng, suewonjp@gmail.com
+Copyright (c) 2026- Suewon Bahng, suewonjp@gmail.com
 
-Last Updated (2018-01-xx)
+Last Updated (2026-01-12)
 
-## Version 1.0.0 (2018-01-xx)
+## Version 1.0.0 (2026-01-12)
 - First Release
-
