@@ -12,7 +12,7 @@ let g:loaded_nerd_tree_netrw_style_preview = 1
 let g:slash = !exists("+shellslash") || &shellslash ? '/' : '\'
 
 function! NerdTreexPreview(key)
-  if ! exists('t:nerdtreex_has_preview_win')
+  if ! exists('t:nerdtreex_has_preview_win') || winnr('$') < 2
     let t:nerdtreex_has_preview_win = 0
   endif
   let l:is_dir = 0
