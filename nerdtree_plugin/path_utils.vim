@@ -3,33 +3,33 @@ if exists('g:loaded_nerd_tree_path_utils') || ! exists('g:loaded_nerd_tree') || 
 endif
 
 let g:loaded_nerd_tree_path_utils = 1
-let g:slash = !exists("+shellslash") || &shellslash ? '/' : '\'
+let s:slash = !exists("+shellslash") || &shellslash ? '/' : '\'
 
 function! NerdTreexGetAbsPath(...)
   let l:node = g:NERDTreeFileNode.GetSelected()
   let l:quote = a:0 ? a:1 : ''
-  return l:quote . g:slash . join(l:node.path.pathSegments, g:slash) . l:quote
+  return l:quote . s:slash . join(l:node.path.pathSegments, s:slash) . l:quote
 endfunction 
 
 function! NerdTreexGetRelPath(...)
   let l:node = g:NERDTreeFileNode.GetSelected()
   let l:quote = a:0 ? a:1 : ''
-  let l:fp = g:slash . join(l:node.path.pathSegments, g:slash)
+  let l:fp = s:slash . join(l:node.path.pathSegments, s:slash)
   return l:quote . fnamemodify(l:fp, ':.') . l:quote
 endfunction
 
 function! NerdTreexGetPathTail( ... )
   let l:node = g:NERDTreeFileNode.GetSelected()
   let l:quote = a:0 ? a:1 : ''
-  let l:fp = g:slash . join(l:node.path.pathSegments, g:slash)
+  let l:fp = s:slash . join(l:node.path.pathSegments, s:slash)
   return l:quote . fnamemodify(l:fp, ':t') . l:quote
 endfunction
 
 function! NerdTreexGetRootPath( ... )
   let l:node = b:NERDTree.getRoot()
   let l:quote = a:0 ? a:1 : ''
-  let l:fp = g:slash . join(l:node.path.pathSegments, g:slash)
-  return l:quote . g:slash . join(l:node.path.pathSegments, g:slash) . l:quote
+  let l:fp = s:slash . join(l:node.path.pathSegments, s:slash)
+  return l:quote . s:slash . join(l:node.path.pathSegments, s:slash) . l:quote
 endfunction
 
 function! NerdTreexInitPathUtils()

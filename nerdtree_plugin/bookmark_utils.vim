@@ -9,7 +9,7 @@ if exists('g:loaded_nerd_tree_bookmark_utils') || ! exists('g:loaded_nerd_tree')
 endif
 
 let g:loaded_nerd_tree_bookmark_utils = 1
-let g:slash = !exists("+shellslash") || &shellslash ? '/' : '\'
+let s:slash = !exists("+shellslash") || &shellslash ? '/' : '\'
 
 function! s:BookmarkPrefix(id)
   return '<<' . a:id . '>>_'
@@ -40,7 +40,7 @@ endfunction
 
 function! NerdTreexBookmark()
   let l:node = g:NERDTreeFileNode.GetSelected()
-  let l:path = g:slash . join(l:node.path.pathSegments, g:slash)
+  let l:path = s:slash . join(l:node.path.pathSegments, s:slash)
   let l:path = substitute(l:path, '\s', '@', 'g')
   let l:name = s:BookmarkPrefix(s:AvailableBookmarkId()) . l:path
   exe 'Bookmark ' . l:name

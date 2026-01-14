@@ -9,7 +9,7 @@ if exists('g:loaded_nerd_tree_netrw_style_preview') || ! exists('g:loaded_nerd_t
 endif
 
 let g:loaded_nerd_tree_netrw_style_preview = 1
-let g:slash = !exists("+shellslash") || &shellslash ? '/' : '\'
+let s:slash = !exists("+shellslash") || &shellslash ? '/' : '\'
 
 function! NerdTreexPreview(key)
   if ! exists('t:nerdtreex_has_preview_win') || winnr('$') < 2
@@ -19,7 +19,7 @@ function! NerdTreexPreview(key)
   if exists('b:NERDTree')
     let l:node = g:NERDTreeFileNode.GetSelected()
     let l:is_dir = l:node.path.isDirectory
-    let l:path = g:slash . join(l:node.path.pathSegments, g:slash)
+    let l:path = s:slash . join(l:node.path.pathSegments, s:slash)
   endif
   if l:is_dir
     return
