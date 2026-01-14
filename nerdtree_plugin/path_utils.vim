@@ -7,8 +7,16 @@ let s:slash = !exists("+shellslash") || &shellslash ? '/' : '\'
 
 function! NerdTreexGetAbsPath(...)
   let l:node = g:NERDTreeFileNode.GetSelected()
-  let l:quote = a:0 ? a:1 : ''
-  return l:quote . s:slash . join(l:node.path.pathSegments, s:slash) . l:quote
+  let l:quote = ''
+  let l:tilde = a:0 ? a:1 : ''
+  if l:tilde != '~'
+    let l:quote = a:0 ? a:1 : ''
+  endif
+  let l:path = l:quote . s:slash . join(l:node.path.pathSegments, s:slash) . l:quote
+  if l:tilde == '~'
+    let l:path = fnamemodify(l:path, ':p:~')
+  endif
+  return l:path
 endfunction 
 
 function! NerdTreexGetRelPath(...)
@@ -37,6 +45,8 @@ function! NerdTreexInitPathUtils()
     nnoremap <buffer><silent> y+ :<C-u>call setreg('*', NerdTreexGetAbsPath())<CR> \| :echo getreg('*')<CR>
     nnoremap <buffer><silent> "" :<C-u>call setreg(v:register, NerdTreexGetAbsPath('"'))<CR> \| :echo getreg(v:register)<CR>
     nnoremap <buffer><silent> '' :<C-u>call setreg(v:register, NerdTreexGetAbsPath("'"))<CR> \| :echo getreg(v:register)<CR>
+    nnoremap <buffer><silent> ~~ :<C-u>call setreg(v:register, NerdTreexGetAbsPath('~'))<CR> \| :echo getreg(v:register)<CR>
+    nnoremap <buffer><silent> ~+ :<C-u>call setreg('*', NerdTreexGetAbsPath('~'))<CR> \| :echo getreg('*')<CR>
     nnoremap <buffer><silent> rr :<C-u>call setreg(v:register, NerdTreexGetRelPath())<CR> \| :echo getreg(v:register)<CR>
     nnoremap <buffer><silent> r+ :<C-u>call setreg('*', NerdTreexGetRelPath())<CR> \| :echo getreg('*')<CR>
     nnoremap <buffer><silent> r" :<C-u>call setreg(v:register, NerdTreexGetRelPath('"'))<CR> \| :echo getreg(v:register)<CR>
@@ -50,6 +60,8 @@ function! NerdTreexInitPathUtils()
     call NERDTreeAddKeyMap({ 'key':'y+', 'quickhelpText':'Yank absolute path to system clipboard', 'callback':v:null })
     call NERDTreeAddKeyMap({ 'key':'""', 'quickhelpText':'Yank absolute double-quoted path', 'callback':v:null })
     call NERDTreeAddKeyMap({ 'key':"''", 'quickhelpText':'Yank absolute single-quoted path', 'callback':v:null })
+    call NERDTreeAddKeyMap({ 'key':'~~', 'quickhelpText':'Yank absolute tilde path', 'callback':v:null })
+    call NERDTreeAddKeyMap({ 'key':'~+', 'quickhelpText':'Yank absolute tilde path to system clipboard', 'callback':v:null })
     call NERDTreeAddKeyMap({ 'key':'rr', 'quickhelpText':'Yank relative path', 'callback':v:null })
     call NERDTreeAddKeyMap({ 'key':'r+', 'quickhelpText':'Yank relative path to system clipboard', 'callback':v:null })
     call NERDTreeAddKeyMap({ 'key':'r"', 'quickhelpText':'Yank relative double-quoted path', 'callback':v:null })
