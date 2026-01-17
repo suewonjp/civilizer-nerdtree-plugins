@@ -79,8 +79,10 @@ endfunction
 
 function! NerdTreexActivateBookmark(bm)
   call a:bm.activate(b:NERDTree, {'where': 'p'})
-  let l:root = b:NERDTree.root.path
-  call s:AddItemToRootHistory(l:root.str())
+  if has_key(b:, 'NERDTree')
+    let l:root = b:NERDTree.root.path
+    call s:AddItemToRootHistory(l:root.str())
+  endif
 endfunction
 
 function! NerdTreexUpDirCurrentRootOpen()
@@ -101,7 +103,7 @@ function! NerdTreexChangeRoot(node)
   call s:AddItemToRootHistory(l:root.str())
 endfunction
 
-function! NerdTreexChangeRootToCwd(node)
+function! NerdTreexChangeRootToCwd()
   try
     let cwd = g:NERDTreePath.New(getcwd())
   catch /^NERDTree.InvalidArgumentsError/
@@ -173,7 +175,6 @@ function! NerdTreexInitBookmarkUtils()
       nnoremap <buffer><silent> g7 :<C-u>call NerdTreexAccessBookmark(7)<CR>
       nnoremap <buffer><silent> g8 :<C-u>call NerdTreexAccessBookmark(8)<CR>
       nnoremap <buffer><silent> g9 :<C-u>call NerdTreexAccessBookmark(9)<CR>
-      nnoremap <buffer><silent> g- :<C-u>call NerdTreexAccessBookmark('-')<CR>
       nnoremap <buffer><silent> gk :<C-u>call NerdTreexRootHistoryBackward()<CR>
       nnoremap <buffer><silent> gj :<C-u>call NerdTreexRootHistoryForward()<CR>
       nnoremap <buffer><silent> Sh :<C-u>call NerdTreexShowRootHistory()<CR>
