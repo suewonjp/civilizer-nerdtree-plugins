@@ -1,3 +1,9 @@
+" ============================================================================
+" Civilizer Nerdtree Plugins
+" Author:       Suewon Bahng <https://github.com/suewonjp/>
+" Version:      1.1.0
+" ============================================================================
+
 if exists('g:loaded_nerd_tree_path_utils') || ! exists('g:loaded_nerd_tree') || ! g:loaded_nerd_tree
   finish
 endif
