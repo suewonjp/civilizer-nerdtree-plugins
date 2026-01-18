@@ -11,10 +11,12 @@ endif
 let g:loaded_nerd_tree_netrw_style_preview = 1
 let s:slash = !exists("+shellslash") || &shellslash ? '/' : '\'
 
+function! s:HasPreviewWin() abort
+  return winnr('$') > 1
+endfunction
+
 function! NerdTreexPreview(key)
-  if ! exists('t:nerdtreex_has_preview_win') || winnr('$') < 2
-    let t:nerdtreex_has_preview_win = 0
-  endif
+  let l:preview_win_exists = s:HasPreviewWin()
   let l:is_dir = 0
   if exists('b:NERDTree')
     let l:node = g:NERDTreeFileNode.GetSelected()
@@ -25,7 +27,7 @@ function! NerdTreexPreview(key)
     return
   endif
   if a:key ==# 'pr'
-    if t:nerdtreex_has_preview_win
+    if l:preview_win_exists
       let l:wnr = winnr()
       exe '2wincmd w'
       exe 'edit ' . l:path
@@ -36,32 +38,32 @@ function! NerdTreexPreview(key)
       else
         exe 'norm gi'
       endif
-      let t:nerdtreex_has_preview_win = 1
+      let l:preview_win_exists = 1
     endif
   elseif a:key ==# 'Pr'
-    if t:nerdtreex_has_preview_win
+    if l:preview_win_exists
       exe '2wincmd w'
       exe 'edit ' . l:path
     else
       exe 'norm s'
-      let t:nerdtreex_has_preview_win = 1
+      let l:preview_win_exists = 1
     endif
   elseif a:key == '<C-w>p'
-    if t:nerdtreex_has_preview_win
+    if l:preview_win_exists
       exe '1wincmd w'
       exe "norm \<Up>"
       call NerdTreexPreview('Pr')
     endif
   elseif a:key == '<C-w>n'
-    if t:nerdtreex_has_preview_win
+    if l:preview_win_exists
       exe '1wincmd w'
       exe "norm \<Down>"
       call NerdTreexPreview('Pr')
     endif
   elseif a:key == '<C-w>z'
-    if t:nerdtreex_has_preview_win
+    if l:preview_win_exists
       exe '2wincmd c'
-      let t:nerdtreex_has_preview_win = 0
+      let l:preview_win_exists = 0
     endif
   endif
 endfunction
@@ -75,10 +77,11 @@ function! NerdTreexInitNetrwStylePreview()
 
     nmap <buffer><silent> pr <Plug>(nerdtree-x-preview-open)
     nmap <buffer><silent> Pr <Plug>(nerdtree-x-preview-open-focus)
-    nmap <expr><silent> <C-w>p get(t:, 'nerdtreex_has_preview_win', 0) ?  '<Plug>(nerdtree-x-preview-prev)' : '<C-w>p'
+    nmap <buffer><silent> <C-w>p <Plug>(nerdtree-x-preview-prev)
+    nmap <expr><silent> <C-w>p <SID>HasPreviewWin() ? '<Plug>(nerdtree-x-preview-prev)' : '<C-w>p'
     nmap <buffer><silent> <C-w>n <Plug>(nerdtree-x-preview-next)
-    nmap <expr><silent> <C-w>n get(t:, 'nerdtreex_has_preview_win', 0) ?  '<Plug>(nerdtree-x-preview-next)' : '<C-w>n'
-    nmap <expr><silent> <C-w>z get(t:, 'nerdtreex_has_preview_win', 0) ?  '<Plug>(nerdtree-x-preview-close)' : '<C-w>z'
+    nmap <expr><silent> <C-w>n <SID>HasPreviewWin() ? '<Plug>(nerdtree-x-preview-next)' : '<C-w>n'
+    nmap <expr><silent> <C-w>z <SID>HasPreviewWin() ? '<Plug>(nerdtree-x-preview-close)' : '<C-w>z'
 
     call NERDTreeAddKeyMap({ 'key':'pr', 'quickhelpText':'Netrw style preview', 'callback':v:null })
     call NERDTreeAddKeyMap({ 'key':'Pr', 'quickhelpText':'Netrw style preview (focus taken)', 'callback':v:null })
