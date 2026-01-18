@@ -17,14 +17,10 @@ endfunction
 
 function! NerdTreexPreview(key)
   let l:preview_win_exists = s:HasPreviewWin()
-  let l:is_dir = 0
+  exe '1wincmd w'
   if exists('b:NERDTree')
     let l:node = g:NERDTreeFileNode.GetSelected()
-    let l:is_dir = l:node.path.isDirectory
     let l:path = s:slash . join(l:node.path.pathSegments, s:slash)
-  endif
-  if l:is_dir
-    return
   endif
   if a:key ==# 'pr'
     if l:preview_win_exists
@@ -33,11 +29,8 @@ function! NerdTreexPreview(key)
       exe 'edit ' . l:path
       exe l:wnr . 'wincmd w'
     else
-      if exists('g:netrw_preview') && g:netrw_preview == 1
-        exe 'norm gs'
-      else
-        exe 'norm gi'
-      endif
+      call l:node.open({'where': 'v'})
+      exe '1wincmd w'
       let l:preview_win_exists = 1
     endif
   elseif a:key ==# 'Pr'
@@ -45,7 +38,7 @@ function! NerdTreexPreview(key)
       exe '2wincmd w'
       exe 'edit ' . l:path
     else
-      exe 'norm s'
+      call l:node.open({'where': 'v'})
       let l:preview_win_exists = 1
     endif
   elseif a:key == '<C-w>p'
@@ -68,6 +61,12 @@ function! NerdTreexPreview(key)
   endif
 endfunction
 
+function! NerdTreexClosePreviewWin(...) abort
+  " Other mappings need no callback, but <C-w>z needs one.
+  " Otherwise, it emits errors when closing preview window on a directory. (don't know why)
+  call NerdTreexPreview('<C-w>z')
+endfunction
+
 function! NerdTreexInitNetrwStylePreview()
     nnoremap <Plug>(nerdtree-x-preview-open) :<C-u>call NerdTreexPreview('pr')<CR>
     nnoremap <Plug>(nerdtree-x-preview-open-focus) :<C-u>call NerdTreexPreview('Pr')<CR>
@@ -87,7 +86,7 @@ function! NerdTreexInitNetrwStylePreview()
     call NERDTreeAddKeyMap({ 'key':'Pr', 'quickhelpText':'Netrw style preview (focus taken)', 'callback':v:null })
     call NERDTreeAddKeyMap({ 'key':'<C-W>p', 'quickhelpText':'Netrw style preview (prev file)', 'callback':v:null })
     call NERDTreeAddKeyMap({ 'key':'<C-W>n', 'quickhelpText':'Netrw style preview (next file)', 'callback':v:null })
-    call NERDTreeAddKeyMap({ 'key':'<C-W>z', 'quickhelpText':'Close Netrw style preview window', 'callback':v:null })
+    call NERDTreeAddKeyMap({ 'key':'<C-W>z', 'quickhelpText':'Close Netrw style preview window', 'callback':'NerdTreexClosePreviewWin' })
 endfunction
 
 au FileType nerdtree call NerdTreexInitNetrwStylePreview()
